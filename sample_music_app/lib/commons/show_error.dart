@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:samplemusicapp/constants/app_constants.dart';
 
 class Error extends StatelessWidget {
   final String errorMessage;
@@ -26,7 +27,8 @@ class Error extends StatelessWidget {
           SizedBox(height: 8),
           RaisedButton(
             color: Colors.lightGreen,
-            child: Text('Retry', style: TextStyle(color: Colors.white)),
+            child: Text(TextConstants.retry,
+                style: TextStyle(color: Colors.white)),
             onPressed: onRetryPressed,
           )
         ],

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class SongList extends StatelessWidget {
@@ -30,11 +29,9 @@ class SongList extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-              title: Text(model.songName),
-              subtitle: Text(model.primaryGenreName != null
-                  ? model.primaryGenreName
-                  : 'Unknown'),
-              onTap: () => print(model.songName),
+              title: Text(model.trackName),
+              subtitle: Text(model.primaryGenreName),
+              onTap: () => print(model.trackName),
             );
           },
         ),

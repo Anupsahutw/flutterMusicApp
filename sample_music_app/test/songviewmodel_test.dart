@@ -1,25 +1,35 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:samplemusicapp/main.dart';
 import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 void main() {
   setUp(() {});
 
-  test("song name null excpetion", () {
-    SongViewModel model = SongViewModel(Results(trackName: 'anup'));
-    expect(model.songName, 'anup');
+  test("track name null exception", () {
+    var track = 'Jon_snow_track';
+    SongViewModel model = SongViewModel(Results(trackName: track));
+    expect(model.trackName, track);
 
     SongViewModel model2 = SongViewModel(Results(trackName: null));
-    expect(model2.songName, 'UnKnown');
+    expect(model2.trackName, 'UnKnown');
+  });
+
+  test("primary Genre Name null exception", () {
+    var genreName = 'bollywood';
+    SongViewModel model = SongViewModel(Results(primaryGenreName: genreName));
+    expect(model.primaryGenreName, genreName);
+
+    SongViewModel model2 = SongViewModel(Results(primaryGenreName: null));
+    expect(model2.primaryGenreName, 'UnKnown');
+  });
+
+  test("artwork null exception", () {
+    var artworkUrl =
+        'https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/24/46/97/24469731-f56f-29f6-67bd-53438f59ebcb/source/100x100bb.jpg';
+    SongViewModel model = SongViewModel(Results(artworkUrl100: artworkUrl));
+    expect(model.artworkUrl100, artworkUrl);
+
+    SongViewModel model2 = SongViewModel(Results(artworkUrl100: null));
+    expect(model2.artworkUrl100, 'UnKnown');
   });
 }

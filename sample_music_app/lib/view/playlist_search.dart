@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/constants/app_constants.dart';
-import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/view/song_list.dart';
-import 'package:samplemusicapp/blocsViewModel/playlist_blocs_view_model.dart';
+import 'package:samplemusicapp/blocs/songlist_blocs.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 import '../commons/loading.dart';
@@ -17,22 +16,22 @@ class PlayListSearch extends StatefulWidget {
 }
 
 class ListSearchState extends State<PlayListSearch> {
-  MovieBloc _bloc;
-  String songs = "*";
+  SongBloc _bloc;
+  String allSongs = "*";
   TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _textController.clear();
-    _bloc = MovieBloc(songs);
+    _bloc = SongBloc(allSongs);
   }
 
-  onItemChanged(String value) {
+  onItemChanged(String artistName) {
     setState(() {
-      value.isNotEmpty
-          ? _bloc.fetchSongList(value)
-          : _bloc.fetchSongList(songs);
+      artistName.isNotEmpty
+          ? _bloc.fetchSongList(artistName)
+          : _bloc.fetchSongList(allSongs);
     });
   }
 
@@ -47,7 +46,7 @@ class ListSearchState extends State<PlayListSearch> {
       ),
       backgroundColor: Colors.black54,
       body: RefreshIndicator(
-        onRefresh: () => _bloc.fetchSongList(songs),
+        onRefresh: () => _bloc.fetchSongList(allSongs),
         child: Column(
           children: <Widget>[
             Container(
@@ -63,7 +62,7 @@ class ListSearchState extends State<PlayListSearch> {
               ),
             ),
             StreamBuilder<ApiResponse<List<SongViewModel>>>(
-              stream: _bloc.movieListStream,
+              stream: _bloc.songListStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   switch (snapshot.data.status) {
@@ -71,18 +70,18 @@ class ListSearchState extends State<PlayListSearch> {
                       return Loading(loadingMessage: snapshot.data.message);
                       break;
                     case Status.COMPLETED:
-                      return snapshot.data.data != null
-                          ? SongList(songList: snapshot.data.data)
-                          : EmptyResult(
-                              message: TextConstants.noSongs,
-                            );
+                      return SongList(songList: snapshot.data.data);
                       break;
                     case Status.ERROR:
                       return Error(
                         errorMessage: TextConstants.wentWrong,
-                        onRetryPressed: () => _bloc.fetchSongList(songs),
+                        onRetryPressed: () => _bloc.fetchSongList(allSongs),
                       );
                       break;
+                    case Status.EMPTY:
+                      return EmptyResult(
+                        message: TextConstants.noSongs,
+                      );
                   }
                 }
                 return Container();

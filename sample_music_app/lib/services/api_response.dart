@@ -11,10 +11,12 @@ class ApiResponse<T> {
 
   ApiResponse.error(this.message) : status = Status.ERROR;
 
+  ApiResponse.emptyResult(this.message) : status = Status.EMPTY;
+
   @override
   String toString() {
     return "Status : $status \n Message : $message \n Data : $data";
   }
 }
 
-enum Status { LOADING, COMPLETED, ERROR }
+enum Status { LOADING, COMPLETED, ERROR, EMPTY }

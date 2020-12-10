@@ -7,22 +7,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:samplemusicapp/blocs/songlist_blocs.dart';
 
 import 'package:samplemusicapp/main.dart';
 import 'package:samplemusicapp/model/songs.dart';
-import 'package:samplemusicapp/repository/playlist_repository.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 void main() {
-  PlayListRepository repo;
-
   setUp(() {});
 
-  test("song name null excpetion", () {
-    SongViewModel model = SongViewModel(Results(trackName: 'anup'));
-    expect(model.songName, 'anup');
-
-    SongViewModel model2 = SongViewModel(Results(trackName: null));
-    expect(model2.songName, 'UnKnown');
-  });
+//  test("song name null excpetion", () {
+//    MovieBloc bloc = MovieBloc('temp');
+//    bloc.fetchSongList('temp_artist');
+//    bloc.
+//    expectLater(actual, matcher)
+//    expect(model.songName, 'anup');
+//
+//    SongViewModel model2 = SongViewModel(Results(trackName: null));
+//    expect(model2.songName, 'UnKnown');
+//  });
 }

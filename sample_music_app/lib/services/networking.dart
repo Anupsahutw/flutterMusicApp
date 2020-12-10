@@ -22,7 +22,7 @@ class NetworkHelper {
 }
 
 class ApiBaseHelper {
-  final String _baseUrl = "https://itunes.apple.com";
+  static const _baseUrl = 'https://itunes.apple.com';
 
   Future<dynamic> get(String url) async {
     print('Api Get, url $url');
