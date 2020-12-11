@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/constants/app_constants.dart';
+import 'package:samplemusicapp/utilities/app_constants.dart';
 
 class Error extends StatelessWidget {
   final String errorMessage;

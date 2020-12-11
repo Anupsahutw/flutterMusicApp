@@ -1,11 +1,35 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
+// ignore: must_be_immutable
 class SongList extends StatelessWidget {
   final List<SongViewModel> songList;
-
   SongList({Key key, this.songList}) : super(key: key);
+  //var playedAudio = "";
+
+  Future<void> playSong(SongViewModel model) async {
+    print(model.previewUrl);
+    final assetsAudioPlayer = AssetsAudioPlayer.withId(model.previewUrl);
+    // ignore: unrelated_type_equality_checks
+    if (model.audioPlaying) {
+      final alreadyPlayedAudio = AssetsAudioPlayer.withId(model.playedAudio);
+      alreadyPlayedAudio.stop();
+      //playedAudio = model.previewUrl;
+      model.setPlayedAudioValue(model.previewUrl);
+
+      try {
+        await assetsAudioPlayer.open(
+          Audio.network(model.previewUrl),
+        );
+      } catch (t) {
+        //mp3 unreachable
+      }
+    } else {
+      assetsAudioPlayer.playOrPause();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +55,7 @@ class SongList extends StatelessWidget {
               ),
               title: Text(model.trackName),
               subtitle: Text(model.primaryGenreName),
-              onTap: () => print(model.trackName),
+              onTap: () => playSong(model),
             );
           },
         ),
