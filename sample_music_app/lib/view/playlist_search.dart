@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:samplemusicapp/model/songs_play.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/view/song_list.dart';
@@ -19,6 +20,7 @@ class ListSearchState extends State<PlayListSearch> {
   SongBloc _bloc;
   String allSongs = "*";
   TextEditingController _textController = TextEditingController();
+  //List<SongsPlay> songPlayList = List();
 
   @override
   void initState() {
@@ -74,13 +76,13 @@ class ListSearchState extends State<PlayListSearch> {
                       break;
                     case Status.ERROR:
                       return Error(
-                        errorMessage: TextConstants.wentWrong,
+                        errorMessage: AppConstants.wentWrong,
                         onRetryPressed: () => _bloc.fetchSongList(allSongs),
                       );
                       break;
                     case Status.EMPTY:
                       return EmptyResult(
-                        message: TextConstants.noSongs,
+                        message: AppConstants.noSongs,
                       );
                   }
                 }

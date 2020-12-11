@@ -27,8 +27,8 @@ class Error extends StatelessWidget {
           SizedBox(height: 8),
           RaisedButton(
             color: Colors.lightGreen,
-            child: Text(TextConstants.retry,
-                style: TextStyle(color: Colors.white)),
+            child:
+                Text(AppConstants.retry, style: TextStyle(color: Colors.white)),
             onPressed: onRetryPressed,
           )
         ],

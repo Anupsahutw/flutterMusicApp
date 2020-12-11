@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'app_exceptions.dart';
@@ -22,13 +23,12 @@ class NetworkHelper {
 }
 
 class ApiBaseHelper {
-  static const _baseUrl = 'https://itunes.apple.com';
-
   Future<dynamic> get(String url) async {
     print('Api Get, url $url');
     var responseJson;
     try {
-      final response = await http.get(_baseUrl + url);
+      final response = await http.get(AppConstants.baseUrl + url);
+      print(response.request);
       responseJson = _returnResponse(response);
     } on SocketException {
       print('No net');
@@ -42,7 +42,7 @@ class ApiBaseHelper {
     print('Api Post, url $url');
     var responseJson;
     try {
-      final response = await http.post(_baseUrl + url, body: body);
+      final response = await http.post(AppConstants.baseUrl + url, body: body);
       responseJson = _returnResponse(response);
     } on SocketException {
       print('No net');
@@ -56,7 +56,7 @@ class ApiBaseHelper {
     print('Api Put, url $url');
     var responseJson;
     try {
-      final response = await http.put(_baseUrl + url, body: body);
+      final response = await http.put(AppConstants.baseUrl + url, body: body);
       responseJson = _returnResponse(response);
     } on SocketException {
       print('No net');
@@ -71,7 +71,7 @@ class ApiBaseHelper {
     print('Api delete, url $url');
     var apiResponse;
     try {
-      final response = await http.delete(_baseUrl + url);
+      final response = await http.delete(AppConstants.baseUrl + url);
       apiResponse = _returnResponse(response);
     } on SocketException {
       print('No net');

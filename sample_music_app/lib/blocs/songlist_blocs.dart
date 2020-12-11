@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/repository/playlist_repository.dart';
 import 'package:samplemusicapp/services/api_response.dart';
+import 'package:samplemusicapp/services/networking.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
@@ -16,14 +17,16 @@ class SongBloc {
   Stream<ApiResponse<List<SongViewModel>>> get songListStream =>
       _songListController.stream;
 
+  ApiBaseHelper _helper = ApiBaseHelper();
+
   SongBloc(String artist) {
     _songListController = StreamController<ApiResponse<List<SongViewModel>>>();
-    _playListRepository = PlayListRepository();
+    _playListRepository = PlayListRepository(_helper);
     fetchSongList(artist);
   }
 
   fetchSongList(String artist) async {
-    songListSink.add(ApiResponse.loading(TextConstants.fetchingPopularSongs));
+    songListSink.add(ApiResponse.loading(AppConstants.fetchingPopularSongs));
     try {
       List<Results> songs = await _playListRepository.fetchSongList(artist);
       List<SongViewModel> songsUI =

@@ -2,7 +2,8 @@ import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/services/networking.dart';
 
 class PlayListRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  ApiBaseHelper _helper;
+  PlayListRepository(this._helper);
 
   Future<List<Results>> fetchSongList(String query) async {
     final response =
