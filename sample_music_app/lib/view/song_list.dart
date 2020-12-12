@@ -68,7 +68,9 @@ class SongState extends State<SongListItemWidget> {
         ),
       ),
       title: Text(widget.model.trackName),
-      subtitle: Text(widget.model.primaryGenreName),
+      subtitle:
+          Text(widget.model.artistName + '\n${widget.model.collectionName}'),
+      isThreeLine: true,
       trailing: ViewWidget(widget.model.isPlaying),
       onTap: () {
         widget.callback(widget.currentSongIndex);

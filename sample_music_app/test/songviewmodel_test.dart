@@ -17,10 +17,10 @@ void main() {
   test("primary Genre Name null exception", () {
     var genreName = 'bollywood';
     SongViewModel model = SongViewModel(Results(primaryGenreName: genreName));
-    expect(model.primaryGenreName, genreName);
+    expect(model.artistName, genreName);
 
     SongViewModel model2 = SongViewModel(Results(primaryGenreName: null));
-    expect(model2.primaryGenreName, 'UnKnown');
+    expect(model2.artistName, 'UnKnown');
   });
 
   test("artwork null exception", () {

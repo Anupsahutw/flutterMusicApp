@@ -3,17 +3,19 @@ import 'package:samplemusicapp/model/songs.dart';
 
 class SongViewModel {
   String _trackName;
-  String _primaryGenreName;
+  String _artistName;
   String _artworkUrl100;
   String _previewUrl;
   String _playedAudio;
   bool _isplaying;
+  String _collectionName;
 
   SongViewModel(Results results) {
     _trackName = results.trackName;
-    _primaryGenreName = results.primaryGenreName;
+    _artistName = results.artistName;
     _artworkUrl100 = results.artworkUrl100;
     _previewUrl = results.previewUrl;
+    _collectionName = results.collectionName;
     _playedAudio = "";
     _isplaying = false;
   }
@@ -22,8 +24,12 @@ class SongViewModel {
     return _trackName != null ? _trackName : AppConstants.unKnown;
   }
 
-  String get primaryGenreName {
-    return _primaryGenreName != null ? _primaryGenreName : AppConstants.unKnown;
+  String get artistName {
+    return _artistName != null ? _artistName : AppConstants.unKnown;
+  }
+
+  String get collectionName {
+    return _collectionName != null ? _collectionName : AppConstants.unKnown;
   }
 
   String get artworkUrl100 {
