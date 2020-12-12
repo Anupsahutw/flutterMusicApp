@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:samplemusicapp/model/songs.dart';
-import 'package:samplemusicapp/view/song_list.dart';
+import 'package:samplemusicapp/view/song_list_widget.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 void main() {
@@ -20,7 +20,7 @@ void main() {
   testWidgets('track name displayed test', (WidgetTester tester) async {
     provideMockedNetworkImages(() async {
       // Now we can pump NetworkImages without crashing our tests. Yay!
-      MaterialApp app = _materialapp(SongList(
+      MaterialApp app = _materialapp(SongListWidget(
         songList: [SongViewModel(Results(trackName: 'Jon_snow_track'))],
       ));
       await tester.pumpWidget(app);

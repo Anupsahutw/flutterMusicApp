@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
-class SongList extends StatefulWidget {
+class SongListWidget extends StatefulWidget {
   final List<SongViewModel> songList;
-  SongList({Key key, this.songList}) : super(key: key);
+  final Function(String url) callback;
+  SongListWidget({Key key, this.songList, this.callback}) : super(key: key);
   @override
-  SongListState createState() => SongListState();
+  SongListWidgetState createState() => SongListWidgetState();
 }
 
-class SongListState extends State<SongList> {
+class SongListWidgetState extends State<SongListWidget> {
   int previousPlayedAudioIndex;
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class SongListState extends State<SongList> {
           itemBuilder: (context, index) {
             SongViewModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
+              widget.callback(model.previewUrl);
               PlaySongViewModel playSongViewModel = PlaySongViewModel();
               playSongViewModel.handleSongPlay(
                   currentSongIndex, previousPlayedAudioIndex, widget.songList);
@@ -71,7 +73,7 @@ class SongState extends State<SongListItemWidget> {
       subtitle:
           Text(widget.model.artistName + '\n${widget.model.collectionName}'),
       isThreeLine: true,
-      trailing: ViewWidget(widget.model.isPlaying),
+      trailing: ImageTrackWidget(widget.model.isPlaying),
       onTap: () {
         widget.callback(widget.currentSongIndex);
       },
@@ -79,10 +81,10 @@ class SongState extends State<SongListItemWidget> {
   }
 }
 
-class ViewWidget extends StatelessWidget {
+class ImageTrackWidget extends StatelessWidget {
   final bool viewVisible;
 
-  ViewWidget(this.viewVisible);
+  ImageTrackWidget(this.viewVisible);
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/view/playlist_search.dart';
+import 'package:samplemusicapp/view/playlist_search_widget.dart';
 
 void main() {
   runApp(MyApp());

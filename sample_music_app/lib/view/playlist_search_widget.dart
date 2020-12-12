@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'package:samplemusicapp/services/api_response.dart';
-import 'package:samplemusicapp/view/song_list.dart';
+import 'package:samplemusicapp/view/player_controls_widget.dart';
+import 'package:samplemusicapp/view/song_list_widget.dart';
 import 'package:samplemusicapp/blocs/songlist_blocs.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
@@ -18,7 +19,9 @@ class PlayListSearch extends StatefulWidget {
 class ListSearchState extends State<PlayListSearch> {
   SongBloc _bloc;
   String allSongs = "*";
+  String currentSongUrl = "";
   TextEditingController _textController = TextEditingController();
+  GlobalKey<PlayControlState> _myKey = GlobalKey();
   //List<SongsPlay> songPlayList = List();
 
   @override
@@ -34,6 +37,13 @@ class ListSearchState extends State<PlayListSearch> {
           ? _bloc.fetchSongList(artistName)
           : _bloc.fetchSongList(allSongs);
     });
+  }
+
+  onSongPlayed(String url) {
+    currentSongUrl = url;
+    print("...................");
+    print(currentSongUrl);
+    _myKey.currentState.play(url);
   }
 
   @override
@@ -71,7 +81,12 @@ class ListSearchState extends State<PlayListSearch> {
                       return Loading(loadingMessage: snapshot.data.message);
                       break;
                     case Status.COMPLETED:
-                      return SongList(songList: snapshot.data.data);
+                      return SongListWidget(
+                        songList: snapshot.data.data,
+                        callback: (url) {
+                          onSongPlayed(url);
+                        },
+                      );
                       break;
                     case Status.ERROR:
                       return Error(
@@ -88,6 +103,8 @@ class ListSearchState extends State<PlayListSearch> {
                 return Container();
               },
             ),
+            PlayerControlWidget(
+                key: _myKey, id: currentSongUrl, url: currentSongUrl),
           ],
         ),
       ),
@@ -97,6 +114,7 @@ class ListSearchState extends State<PlayListSearch> {
   @override
   void dispose() {
     _bloc.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }

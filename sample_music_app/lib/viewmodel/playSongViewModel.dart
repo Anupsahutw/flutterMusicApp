@@ -36,6 +36,6 @@ class PlaySongViewModel {
       songList[currentSongIndex]
           .setIsPlaying(!songList[currentSongIndex].isPlaying);
     }
-    playSong(songList[currentSongIndex], songList, previousPlayedAudioIndex);
+    //playSong(songList[currentSongIndex], songList, previousPlayedAudioIndex);
   }
 }
