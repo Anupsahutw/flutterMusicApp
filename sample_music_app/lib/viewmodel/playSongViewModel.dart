@@ -1,14 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:samplemusicapp/model/songs_play.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class PlaySongViewModel {
-//  String currentSong;
-//
-//  PlaySongViewModel(SongsPlay songsPlay) {
-//    currentSong = songsPlay.currentSong;
-//  }
-
   Future<void> playSong(SongViewModel model, List<SongViewModel> songList,
       int previousPlayedAudioIndex) async {
     print(model.previewUrl);
@@ -19,8 +12,6 @@ class PlaySongViewModel {
             songList[previousPlayedAudioIndex].previewUrl);
         alreadyPlayedAudio.stop();
       }
-      //previousSong = model.previewUrl;
-      //model.setPlayedAudioValue(model.previewUrl);
       try {
         await assetsAudioPlayer.open(
           Audio.network(model.previewUrl),
@@ -31,5 +22,20 @@ class PlaySongViewModel {
     } else {
       assetsAudioPlayer.playOrPause();
     }
+  }
+
+  void handleSongPlay(int currentSongIndex, int previousPlayedAudioIndex,
+      List<SongViewModel> songList) {
+    if (previousPlayedAudioIndex == currentSongIndex) {
+      songList[currentSongIndex]
+          .setIsPlaying(!songList[currentSongIndex].isPlaying);
+    } else {
+      if (previousPlayedAudioIndex != null) {
+        songList[previousPlayedAudioIndex].setIsPlaying(false);
+      }
+      songList[currentSongIndex]
+          .setIsPlaying(!songList[currentSongIndex].isPlaying);
+    }
+    playSong(songList[currentSongIndex], songList, previousPlayedAudioIndex);
   }
 }

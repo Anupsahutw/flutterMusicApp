@@ -1,12 +1,9 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/model/songs_play.dart';
 import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
-// ignore: must_be_immutable
 class SongList extends StatefulWidget {
   final List<SongViewModel> songList;
   SongList({Key key, this.songList}) : super(key: key);
@@ -26,21 +23,9 @@ class SongListState extends State<SongList> {
           itemBuilder: (context, index) {
             SongViewModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
-              print(currentSongIndex);
-              if (previousPlayedAudioIndex == currentSongIndex) {
-                widget.songList[currentSongIndex]
-                    .setIsPlaying(!widget.songList[currentSongIndex].isPlaying);
-              } else {
-                if (previousPlayedAudioIndex != null) {
-                  widget.songList[previousPlayedAudioIndex].setIsPlaying(false);
-                }
-                widget.songList[currentSongIndex].setIsPlaying(true);
-              }
               PlaySongViewModel playSongViewModel = PlaySongViewModel();
-//              PlaySongViewModel playSongViewModel = PlaySongViewModel(
-//                  SongsPlay(widget.songList[currentSongIndex].previewUrl));
-              playSongViewModel.playSong(widget.songList[currentSongIndex],
-                  widget.songList, previousPlayedAudioIndex);
+              playSongViewModel.handleSongPlay(
+                  currentSongIndex, previousPlayedAudioIndex, widget.songList);
               previousPlayedAudioIndex = currentSongIndex;
               setState(() {});
             }, widget.songList, index, previousPlayedAudioIndex);
@@ -86,16 +71,7 @@ class SongState extends State<SongListItemWidget> {
       subtitle: Text(widget.model.primaryGenreName),
       trailing: ViewWidget(widget.model.isPlaying),
       onTap: () {
-        // isPlaying = !isPlaying;
-        //setState(() {});
         widget.callback(widget.currentSongIndex);
-        //setState(() {});
-//        PlaySongViewModel playSongViewModel =
-//            PlaySongViewModel(SongsPlay(widget.model.previewUrl));
-//        playSongViewModel.playSong(
-//            widget.model, widget.songList, widget.previousPlayedAudioIndex);
-
-//        playSong(model);
       },
     );
   }

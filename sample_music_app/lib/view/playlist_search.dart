@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/model/songs_play.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/view/song_list.dart';
