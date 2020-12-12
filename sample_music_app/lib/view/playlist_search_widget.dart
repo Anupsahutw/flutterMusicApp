@@ -19,9 +19,11 @@ class PlayListSearch extends StatefulWidget {
 class ListSearchState extends State<PlayListSearch> {
   SongBloc _bloc;
   String allSongs = "*";
-  String currentSongUrl = "";
+  List<SongViewModel> songList;
+  int currentPlayedAudioIndex;
   TextEditingController _textController = TextEditingController();
   GlobalKey<PlayControlState> _myKey = GlobalKey();
+  GlobalKey<SongListWidgetState> _myKeySongList = GlobalKey();
   //List<SongsPlay> songPlayList = List();
 
   @override
@@ -41,16 +43,29 @@ class ListSearchState extends State<PlayListSearch> {
 
   onSongPlayed(int currentPlayedAudioIndex, int previousPlayedAudioIndex,
       List<SongViewModel> songList) {
+    String currentSongUrl = "";
     currentSongUrl = songList[currentPlayedAudioIndex].previewUrl;
     print("...................");
     print(currentSongUrl);
-    _myKey.currentState.setCurrentSongUrl(currentSongUrl);
+    songList = songList;
+    currentPlayedAudioIndex = currentPlayedAudioIndex;
+    _myKey.currentState
+        .setCurrentSongUrl(currentSongUrl, songList, currentPlayedAudioIndex);
     if (songList[currentPlayedAudioIndex].isPlaying) {
       _myKey.currentState.setStateOnPlay(true);
     } else {
       _myKey.currentState.setStateOnPlay(false);
     }
+
     //setState(() {});
+  }
+
+  onSongPaused(bool isPlaying) {
+    /*print("//////////////////");
+    print(songList);
+    _myKeySongList.currentState.widget.songList[0].setIsPlaying(isPlaying);
+    //songList[currentPlayedAudioIndex].setIsPlaying(isPlaying);
+    setState(() {});*/
   }
 
   @override
@@ -89,6 +104,7 @@ class ListSearchState extends State<PlayListSearch> {
                       break;
                     case Status.COMPLETED:
                       return SongListWidget(
+                        key: _myKeySongList,
                         songList: snapshot.data.data,
                         callback: (currentSongIndex, previousPlayedAudioIndex,
                             songList) {
@@ -112,7 +128,13 @@ class ListSearchState extends State<PlayListSearch> {
                 return Container();
               },
             ),
-            PlayerControlWidget(key: _myKey),
+            PlayerControlWidget(
+              key: _myKey,
+              callback: (isPlaying, songList, currentPlayedAudioIndex) {
+                print(isPlaying);
+                onSongPaused(isPlaying);
+              },
+            ),
           ],
         ),
       ),

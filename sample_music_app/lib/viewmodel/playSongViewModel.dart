@@ -3,6 +3,7 @@ import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class PlaySongViewModel {
   static var assetsAudioPlayer = AssetsAudioPlayer();
+
   Future<void> playSong(SongViewModel model, List<SongViewModel> songList,
       int previousPlayedAudioIndex) async {
     print(model.previewUrl);

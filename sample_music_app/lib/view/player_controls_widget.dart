@@ -4,12 +4,13 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
+import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class PlayerControlWidget extends StatefulWidget {
-  final String id;
-  final String url;
+  final Function(bool isPlaying, List<SongViewModel> songList,
+      int currentPlayedAudioIndex) callback;
 
-  PlayerControlWidget({Key key, this.id, this.url}) : super(key: key);
+  PlayerControlWidget({Key key, this.callback}) : super(key: key);
   @override
   PlayControlState createState() => PlayControlState();
 }
@@ -21,6 +22,8 @@ class PlayControlState extends State<PlayerControlWidget> {
   bool _isPlaying = false;
   bool _isPaused = false;
   String currentSongUrl;
+  List<SongViewModel> songList;
+  int currentPlayedAudioIndex;
 
   @override
   void initState() {
@@ -51,6 +54,7 @@ class PlayControlState extends State<PlayerControlWidget> {
         Audio.network(url),
       );
       setStateOnPlay(true);
+      widget.callback(true, songList, currentPlayedAudioIndex);
     } catch (t) {
       //mp3 unreachable
     }
@@ -62,18 +66,23 @@ class PlayControlState extends State<PlayerControlWidget> {
     });
   }
 
-  void setCurrentSongUrl(String url) {
+  void setCurrentSongUrl(
+      String url, List<SongViewModel> songList, int currentPlayedAudioIndex) {
     currentSongUrl = url;
+    songList = songList;
+    currentPlayedAudioIndex = currentPlayedAudioIndex;
   }
 
   Future pause() async {
     await _audio.pause();
     setStateOnPlay(false);
+    widget.callback(false, songList, currentPlayedAudioIndex);
   }
 
   Future resume() async {
     await _audio.play();
     setStateOnPlay(true);
+    widget.callback(true, songList, currentPlayedAudioIndex);
   }
 
   @override
