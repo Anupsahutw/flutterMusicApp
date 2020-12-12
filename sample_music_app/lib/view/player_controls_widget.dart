@@ -46,6 +46,7 @@ class PlayControlState extends State<PlayerControlWidget> {
       _isPlaying = false;
       _isPaused = false;
     });
+    widget.callback(false, songList, currentPlayedAudioIndex);
   }
 
   Future play(String url) async {
@@ -69,8 +70,8 @@ class PlayControlState extends State<PlayerControlWidget> {
   void setCurrentSongUrl(
       String url, List<SongViewModel> songList, int currentPlayedAudioIndex) {
     currentSongUrl = url;
-    songList = songList;
-    currentPlayedAudioIndex = currentPlayedAudioIndex;
+    this.songList = songList;
+    this.currentPlayedAudioIndex = currentPlayedAudioIndex;
   }
 
   Future pause() async {

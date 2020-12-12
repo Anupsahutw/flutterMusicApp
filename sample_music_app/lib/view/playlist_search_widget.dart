@@ -60,12 +60,9 @@ class ListSearchState extends State<PlayListSearch> {
     //setState(() {});
   }
 
-  onSongPaused(bool isPlaying) {
-    /*print("//////////////////");
-    print(songList);
-    _myKeySongList.currentState.widget.songList[0].setIsPlaying(isPlaying);
+  onSongPaused() {
     //songList[currentPlayedAudioIndex].setIsPlaying(isPlaying);
-    setState(() {});*/
+    setState(() {});
   }
 
   @override
@@ -132,7 +129,12 @@ class ListSearchState extends State<PlayListSearch> {
               key: _myKey,
               callback: (isPlaying, songList, currentPlayedAudioIndex) {
                 print(isPlaying);
-                onSongPaused(isPlaying);
+                print("//////////////////");
+                print(songList);
+                _myKeySongList
+                    .currentState.widget.songList[currentPlayedAudioIndex]
+                    .setIsPlaying(isPlaying);
+                onSongPaused();
               },
             ),
           ],
