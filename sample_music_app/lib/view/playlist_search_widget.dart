@@ -39,11 +39,18 @@ class ListSearchState extends State<PlayListSearch> {
     });
   }
 
-  onSongPlayed(String url) {
-    currentSongUrl = url;
+  onSongPlayed(int currentPlayedAudioIndex, int previousPlayedAudioIndex,
+      List<SongViewModel> songList) {
+    currentSongUrl = songList[currentPlayedAudioIndex].previewUrl;
     print("...................");
     print(currentSongUrl);
-    _myKey.currentState.play(url);
+    _myKey.currentState.setCurrentSongUrl(currentSongUrl);
+    if (songList[currentPlayedAudioIndex].isPlaying) {
+      _myKey.currentState.setStateOnPlay(true);
+    } else {
+      _myKey.currentState.setStateOnPlay(false);
+    }
+    //setState(() {});
   }
 
   @override
@@ -83,8 +90,10 @@ class ListSearchState extends State<PlayListSearch> {
                     case Status.COMPLETED:
                       return SongListWidget(
                         songList: snapshot.data.data,
-                        callback: (url) {
-                          onSongPlayed(url);
+                        callback: (currentSongIndex, previousPlayedAudioIndex,
+                            songList) {
+                          onSongPlayed(currentSongIndex,
+                              previousPlayedAudioIndex, songList);
                         },
                       );
                       break;
@@ -103,8 +112,7 @@ class ListSearchState extends State<PlayListSearch> {
                 return Container();
               },
             ),
-            PlayerControlWidget(
-                key: _myKey, id: currentSongUrl, url: currentSongUrl),
+            PlayerControlWidget(key: _myKey),
           ],
         ),
       ),

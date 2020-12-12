@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
 
 class PlayerControlWidget extends StatefulWidget {
   final String id;
@@ -19,11 +20,12 @@ class PlayControlState extends State<PlayerControlWidget> {
 
   bool _isPlaying = false;
   bool _isPaused = false;
+  String currentSongUrl;
 
   @override
   void initState() {
     super.initState();
-    _audio = AssetsAudioPlayer.withId(widget.id);
+    _audio = PlaySongViewModel.assetsAudioPlayer;
     _playerSub = _audio.playlistAudioFinished.listen((event) {
       _clearPlayer();
     });
@@ -48,31 +50,30 @@ class PlayControlState extends State<PlayerControlWidget> {
       await _audio.open(
         Audio.network(url),
       );
-      setState(() {
-        _isPlaying = true;
-      });
+      setStateOnPlay(true);
     } catch (t) {
       //mp3 unreachable
     }
-//    if (result == 1) {
-//      setState(() {
-//        _isPlaying = true;
-//      });
-//    }
+  }
+
+  void setStateOnPlay(bool value) {
+    setState(() {
+      _isPlaying = value;
+    });
+  }
+
+  void setCurrentSongUrl(String url) {
+    currentSongUrl = url;
   }
 
   Future pause() async {
     await _audio.pause();
-    setState(() {
-      _isPlaying = false;
-    });
+    setStateOnPlay(false);
   }
 
   Future resume() async {
     await _audio.play();
-    setState(() {
-      _isPlaying = true;
-    });
+    setStateOnPlay(true);
   }
 
   @override
@@ -84,8 +85,7 @@ class PlayControlState extends State<PlayerControlWidget> {
             ? Icon(Icons.pause_circle_filled)
             : Icon(Icons.play_circle_outline),
         iconSize: 60,
-        onPressed: () =>
-            _isPlaying ? pause() : _isPaused ? resume() : play(widget.url),
+        onPressed: () => _isPlaying ? pause() : play(currentSongUrl),
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),

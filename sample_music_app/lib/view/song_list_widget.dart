@@ -6,7 +6,8 @@ import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class SongListWidget extends StatefulWidget {
   final List<SongViewModel> songList;
-  final Function(String url) callback;
+  final Function(int currentPlayedAudioIndex, int previousPlayedAudioIndex,
+      List<SongViewModel> songList) callback;
   SongListWidget({Key key, this.songList, this.callback}) : super(key: key);
   @override
   SongListWidgetState createState() => SongListWidgetState();
@@ -24,10 +25,11 @@ class SongListWidgetState extends State<SongListWidget> {
           itemBuilder: (context, index) {
             SongViewModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
-              widget.callback(model.previewUrl);
               PlaySongViewModel playSongViewModel = PlaySongViewModel();
-              playSongViewModel.handleSongPlay(
+              var handleSongPlayList = playSongViewModel.handleSongPlay(
                   currentSongIndex, previousPlayedAudioIndex, widget.songList);
+              widget.callback(currentSongIndex, previousPlayedAudioIndex,
+                  handleSongPlayList);
               previousPlayedAudioIndex = currentSongIndex;
               setState(() {});
             }, widget.songList, index, previousPlayedAudioIndex);

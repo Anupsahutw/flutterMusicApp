@@ -2,10 +2,11 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class PlaySongViewModel {
+  static var assetsAudioPlayer = AssetsAudioPlayer();
   Future<void> playSong(SongViewModel model, List<SongViewModel> songList,
       int previousPlayedAudioIndex) async {
     print(model.previewUrl);
-    final assetsAudioPlayer = AssetsAudioPlayer.withId(model.previewUrl);
+    //final assetsAudioPlayer = AssetsAudioPlayer.withId(model.previewUrl);
     if (model.isPlaying) {
       if (previousPlayedAudioIndex != null) {
         final alreadyPlayedAudio = AssetsAudioPlayer.withId(
@@ -24,8 +25,8 @@ class PlaySongViewModel {
     }
   }
 
-  void handleSongPlay(int currentSongIndex, int previousPlayedAudioIndex,
-      List<SongViewModel> songList) {
+  List<SongViewModel> handleSongPlay(int currentSongIndex,
+      int previousPlayedAudioIndex, List<SongViewModel> songList) {
     if (previousPlayedAudioIndex == currentSongIndex) {
       songList[currentSongIndex]
           .setIsPlaying(!songList[currentSongIndex].isPlaying);
@@ -36,6 +37,7 @@ class PlaySongViewModel {
       songList[currentSongIndex]
           .setIsPlaying(!songList[currentSongIndex].isPlaying);
     }
-    //playSong(songList[currentSongIndex], songList, previousPlayedAudioIndex);
+    playSong(songList[currentSongIndex], songList, previousPlayedAudioIndex);
+    return songList;
   }
 }
