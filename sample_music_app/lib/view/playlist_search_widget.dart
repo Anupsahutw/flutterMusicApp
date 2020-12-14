@@ -6,7 +6,7 @@ import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/view/player_controls_widget.dart';
 import 'package:samplemusicapp/view/song_list_widget.dart';
 import 'package:samplemusicapp/blocs/songlist_blocs.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 import '../commons/loading.dart';
 import '../commons/show_error.dart';
@@ -34,11 +34,9 @@ class ListSearchState extends State<PlayListSearch> {
 
   onItemChanged(String artistName) {
     _debounce.run(() {
-      //setState(() {
       artistName.isNotEmpty
           ? _bloc.fetchSongList(artistName)
           : _bloc.fetchSongList(_allSongs);
-      // });
     });
   }
 
@@ -56,7 +54,8 @@ class ListSearchState extends State<PlayListSearch> {
   }
 
   onSongPaused() {
-    setState(() {});
+    _myKeySongList.currentState.setState(() {});
+    //setState(() {});
   }
 
   @override
@@ -64,7 +63,7 @@ class ListSearchState extends State<PlayListSearch> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Songs Mania',
+        title: Text(AppConstants.navTitle,
             style: TextStyle(color: Colors.lightGreen, fontSize: 28)),
         backgroundColor: Colors.black54,
       ),
@@ -80,7 +79,7 @@ class ListSearchState extends State<PlayListSearch> {
                 child: TextField(
                   controller: _textController,
                   decoration: InputDecoration(
-                    hintText: 'Search By Artist...',
+                    hintText: AppConstants.searchBy,
                   ),
                   onChanged: onItemChanged,
                 ),

@@ -6,7 +6,7 @@ class SongViewModel {
   String _artistName;
   String _artworkUrl100;
   String _previewUrl;
-  String _playedAudio;
+  //String _playedAudio;
   bool _isplaying;
   String _collectionName;
 
@@ -16,7 +16,6 @@ class SongViewModel {
     _artworkUrl100 = results.artworkUrl100;
     _previewUrl = results.previewUrl;
     _collectionName = results.collectionName;
-    _playedAudio = "";
     _isplaying = false;
   }
 
@@ -38,18 +37,6 @@ class SongViewModel {
 
   String get previewUrl {
     return _previewUrl != null ? _previewUrl : AppConstants.unKnown;
-  }
-
-  bool get audioPlaying {
-    return _playedAudio != _previewUrl ? true : false;
-  }
-
-  void setPlayedAudioValue(String value) {
-    _playedAudio = value;
-  }
-
-  String get playedAudio {
-    return _playedAudio;
   }
 
   void setIsPlaying(bool value) {

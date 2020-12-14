@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/view/song_list_widget.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 void main() {
   MaterialApp _materialapp(Widget widget) {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/viewmodel/handleSongViewModel.dart';
+import 'package:samplemusicapp/viewmodel/handle_song_viewmodel.dart';
 import 'package:samplemusicapp/commons/audioPlayer.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 class SongListWidget extends StatefulWidget {
   final List<SongViewModel> songList;

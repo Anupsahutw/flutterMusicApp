@@ -4,7 +4,7 @@ import 'package:samplemusicapp/repository/playlist_repository.dart';
 import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/services/networking.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 class SongBloc {
   PlayListRepository _playListRepository;

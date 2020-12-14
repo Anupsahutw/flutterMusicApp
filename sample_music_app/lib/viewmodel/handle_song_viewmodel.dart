@@ -1,6 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:samplemusicapp/commons/audioPlayer.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 class HandleSongViewModel {
   Future<void> playSong(SongViewModel model, List<SongViewModel> songList,

@@ -4,7 +4,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/commons/audioPlayer.dart';
-import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
+import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
 
 class PlayerControlWidget extends StatefulWidget {
   final Function(bool isPlaying, List<SongViewModel> songList,
@@ -24,6 +24,7 @@ class PlayControlState extends State<PlayerControlWidget> {
   String currentSongUrl;
   List<SongViewModel> songList;
   int currentPlayedAudioIndex;
+  String previousSongUrl;
 
   @override
   void initState() {
@@ -50,18 +51,6 @@ class PlayControlState extends State<PlayerControlWidget> {
     widget.callback(false, songList, currentPlayedAudioIndex);
   }
 
-  Future play(String url) async {
-    try {
-      await _audio.open(
-        Audio.network(url),
-      );
-      setStateOnPlay(true, true);
-      widget.callback(true, songList, currentPlayedAudioIndex);
-    } catch (t) {
-      //mp3 unreachable
-    }
-  }
-
   void setStateOnPlay(bool playing, bool visible) {
     setState(() {
       _isPlaying = playing;
@@ -76,17 +65,25 @@ class PlayControlState extends State<PlayerControlWidget> {
     this.currentPlayedAudioIndex = currentPlayedAudioIndex;
   }
 
-  Future pause() async {
-    await _audio.pause();
-    setStateOnPlay(false, true);
-    widget.callback(false, songList, currentPlayedAudioIndex);
+  Future play(String url) async {
+    playPauseAudio(true);
   }
 
-  Future resume() async {
-    await _audio.play();
-    setStateOnPlay(true, true);
-    widget.callback(true, songList, currentPlayedAudioIndex);
+  Future playPauseAudio(bool isPlaying) async {
+    await _audio.playOrPause();
+    setStateOnPlay(isPlaying, true);
+    widget.callback(isPlaying, songList, currentPlayedAudioIndex);
   }
+
+  Future pause() async {
+    playPauseAudio(false);
+  }
+
+//  Future resume() async {
+//    await _audio.play();
+//    setStateOnPlay(true, true);
+//    widget.callback(true, songList, currentPlayedAudioIndex);
+//  }
 
   @override
   Widget build(BuildContext context) {
