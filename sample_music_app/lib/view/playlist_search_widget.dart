@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/commons/debounce.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
@@ -122,10 +123,13 @@ class ListSearchState extends State<PlayListSearch> {
             PlayerControlWidget(
               key: _myKey,
               callback: (isPlaying, songList, currentPlayedAudioIndex) {
-                _myKeySongList
-                    .currentState.widget.songList[currentPlayedAudioIndex]
-                    .setIsPlaying(isPlaying);
-                onSongPaused();
+                if (listEquals(
+                    songList, _myKeySongList.currentState.widget.songList)) {
+                  _myKeySongList
+                      .currentState.widget.songList[currentPlayedAudioIndex]
+                      .setIsPlaying(isPlaying);
+                  onSongPaused();
+                }
               },
             ),
           ],

@@ -65,7 +65,7 @@ class PlayControlState extends State<PlayerControlWidget> {
     this.currentPlayedAudioIndex = currentPlayedAudioIndex;
   }
 
-  Future play(String url) async {
+  void play() {
     playPauseAudio(true);
   }
 
@@ -75,7 +75,7 @@ class PlayControlState extends State<PlayerControlWidget> {
     widget.callback(isPlaying, songList, currentPlayedAudioIndex);
   }
 
-  Future pause() async {
+  void pause() {
     playPauseAudio(false);
   }
 
@@ -96,7 +96,7 @@ class PlayControlState extends State<PlayerControlWidget> {
               ? Icon(Icons.pause_circle_filled)
               : Icon(Icons.play_circle_outline),
           iconSize: 60,
-          onPressed: () => _isPlaying ? pause() : play(currentSongUrl),
+          onPressed: () => _isPlaying ? pause() : play(),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
