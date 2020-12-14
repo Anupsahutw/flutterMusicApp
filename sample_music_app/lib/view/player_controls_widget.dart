@@ -20,7 +20,7 @@ class PlayControlState extends State<PlayerControlWidget> {
   AssetsAudioPlayer _audio;
 
   bool _isPlaying = false;
-  bool _isPaused = false;
+  bool _visible = false;
   String currentSongUrl;
   List<SongViewModel> songList;
   int currentPlayedAudioIndex;
@@ -44,7 +44,7 @@ class PlayControlState extends State<PlayerControlWidget> {
   void _clearPlayer() {
     setState(() {
       _isPlaying = false;
-      _isPaused = false;
+      _visible = false;
     });
     widget.callback(false, songList, currentPlayedAudioIndex);
   }
@@ -54,16 +54,17 @@ class PlayControlState extends State<PlayerControlWidget> {
       await _audio.open(
         Audio.network(url),
       );
-      setStateOnPlay(true);
+      setStateOnPlay(true, true);
       widget.callback(true, songList, currentPlayedAudioIndex);
     } catch (t) {
       //mp3 unreachable
     }
   }
 
-  void setStateOnPlay(bool value) {
+  void setStateOnPlay(bool playing, bool visible) {
     setState(() {
-      _isPlaying = value;
+      _isPlaying = playing;
+      _visible = visible;
     });
   }
 
@@ -76,37 +77,40 @@ class PlayControlState extends State<PlayerControlWidget> {
 
   Future pause() async {
     await _audio.pause();
-    setStateOnPlay(false);
+    setStateOnPlay(false, true);
     widget.callback(false, songList, currentPlayedAudioIndex);
   }
 
   Future resume() async {
     await _audio.play();
-    setStateOnPlay(true);
+    setStateOnPlay(true, true);
     widget.callback(true, songList, currentPlayedAudioIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: FractionalOffset.bottomCenter,
-      child: IconButton(
-        icon: (_isPlaying)
-            ? Icon(Icons.pause_circle_filled)
-            : Icon(Icons.play_circle_outline),
-        iconSize: 60,
-        onPressed: () => _isPlaying ? pause() : play(currentSongUrl),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
-        color: Colors.grey.withOpacity(0.5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            offset: Offset(0.0, 1.0), //(x,y)
-            blurRadius: 6.0,
-          ),
-        ],
+    return Visibility(
+      visible: _visible,
+      child: Container(
+        alignment: FractionalOffset.bottomCenter,
+        child: IconButton(
+          icon: (_isPlaying)
+              ? Icon(Icons.pause_circle_filled)
+              : Icon(Icons.play_circle_outline),
+          iconSize: 60,
+          onPressed: () => _isPlaying ? pause() : play(currentSongUrl),
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.grey.withOpacity(0.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
       ),
     );
   }

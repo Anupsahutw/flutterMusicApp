@@ -19,12 +19,9 @@ class PlayListSearch extends StatefulWidget {
 class ListSearchState extends State<PlayListSearch> {
   SongBloc _bloc;
   String allSongs = "*";
-  List<SongViewModel> songList;
-  int currentPlayedAudioIndex;
   TextEditingController _textController = TextEditingController();
   GlobalKey<PlayControlState> _myKey = GlobalKey();
   GlobalKey<SongListWidgetState> _myKeySongList = GlobalKey();
-  //List<SongsPlay> songPlayList = List();
 
   @override
   void initState() {
@@ -45,23 +42,16 @@ class ListSearchState extends State<PlayListSearch> {
       List<SongViewModel> songList) {
     String currentSongUrl = "";
     currentSongUrl = songList[currentPlayedAudioIndex].previewUrl;
-    print("...................");
-    print(currentSongUrl);
-    songList = songList;
-    currentPlayedAudioIndex = currentPlayedAudioIndex;
     _myKey.currentState
         .setCurrentSongUrl(currentSongUrl, songList, currentPlayedAudioIndex);
     if (songList[currentPlayedAudioIndex].isPlaying) {
-      _myKey.currentState.setStateOnPlay(true);
+      _myKey.currentState.setStateOnPlay(true, true);
     } else {
-      _myKey.currentState.setStateOnPlay(false);
+      _myKey.currentState.setStateOnPlay(false, false);
     }
-
-    //setState(() {});
   }
 
   onSongPaused() {
-    //songList[currentPlayedAudioIndex].setIsPlaying(isPlaying);
     setState(() {});
   }
 
@@ -128,9 +118,6 @@ class ListSearchState extends State<PlayListSearch> {
             PlayerControlWidget(
               key: _myKey,
               callback: (isPlaying, songList, currentPlayedAudioIndex) {
-                print(isPlaying);
-                print("//////////////////");
-                print(songList);
                 _myKeySongList
                     .currentState.widget.songList[currentPlayedAudioIndex]
                     .setIsPlaying(isPlaying);
