@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
+import 'package:samplemusicapp/commons/audioPlayer.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class PlayerControlWidget extends StatefulWidget {
@@ -28,7 +28,8 @@ class PlayControlState extends State<PlayerControlWidget> {
   @override
   void initState() {
     super.initState();
-    _audio = PlaySongViewModel.assetsAudioPlayer;
+    var playSongViewModel = SingletonAudioPlayer();
+    _audio = playSongViewModel.assetsAudioPlayer;
     _playerSub = _audio.playlistAudioFinished.listen((event) {
       _clearPlayer();
     });

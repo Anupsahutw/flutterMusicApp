@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/viewmodel/playSongViewModel.dart';
+import 'package:samplemusicapp/viewmodel/handleSongViewModel.dart';
+import 'package:samplemusicapp/commons/audioPlayer.dart';
 import 'package:samplemusicapp/viewmodel/songviewmodel.dart';
 
 class SongListWidget extends StatefulWidget {
@@ -15,6 +16,7 @@ class SongListWidget extends StatefulWidget {
 
 class SongListWidgetState extends State<SongListWidget> {
   int previousPlayedAudioIndex;
+  var handleSongViewModel = HandleSongViewModel();
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -25,8 +27,7 @@ class SongListWidgetState extends State<SongListWidget> {
           itemBuilder: (context, index) {
             SongViewModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
-              PlaySongViewModel playSongViewModel = PlaySongViewModel();
-              var handleSongPlayList = playSongViewModel.handleSongPlay(
+              var handleSongPlayList = handleSongViewModel.handlePlaySong(
                   currentSongIndex, previousPlayedAudioIndex, widget.songList);
               widget.callback(currentSongIndex, previousPlayedAudioIndex,
                   handleSongPlayList);
@@ -54,7 +55,7 @@ class SongListItemWidget extends StatefulWidget {
 
 class SongState extends State<SongListItemWidget> {
   bool isPlaying = false;
-  PlaySongViewModel playSongViewModel;
+  SingletonAudioPlayer playSongViewModel;
 
   @override
   Widget build(BuildContext context) {
