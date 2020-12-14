@@ -69,6 +69,7 @@ class ListSearchState extends State<PlayListSearch> {
         backgroundColor: Colors.black54,
       ),
       backgroundColor: Colors.black54,
+      resizeToAvoidBottomInset: false,
       body: RefreshIndicator(
         onRefresh: () => _bloc.fetchSongList(_allSongs),
         child: Column(
@@ -106,13 +107,13 @@ class ListSearchState extends State<PlayListSearch> {
                       break;
                     case Status.ERROR:
                       return Error(
-                        errorMessage: AppConstants.wentWrong,
+                        errorMessage: snapshot.data.message,
                         onRetryPressed: () => _bloc.fetchSongList(_allSongs),
                       );
                       break;
                     case Status.EMPTY:
                       return EmptyResult(
-                        message: AppConstants.noSongs,
+                        message: snapshot.data.message,
                       );
                   }
                 }

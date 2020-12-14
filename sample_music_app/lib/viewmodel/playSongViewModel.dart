@@ -7,7 +7,6 @@ class PlaySongViewModel {
   Future<void> playSong(SongViewModel model, List<SongViewModel> songList,
       int previousPlayedAudioIndex) async {
     print(model.previewUrl);
-    //final assetsAudioPlayer = AssetsAudioPlayer.withId(model.previewUrl);
     if (model.isPlaying) {
       if (previousPlayedAudioIndex != null) {
         final alreadyPlayedAudio = AssetsAudioPlayer.withId(

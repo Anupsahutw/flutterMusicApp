@@ -31,9 +31,12 @@ class SongBloc {
       List<Results> songs = await _playListRepository.fetchSongList(artist);
       List<SongViewModel> songsUI =
           songs.map((results) => SongViewModel(results)).toList();
-      songListSink.add(ApiResponse.completed(songsUI));
+      if (songsUI.length == 0)
+        songListSink.add(ApiResponse.emptyResult(AppConstants.noSongs));
+      else
+        songListSink.add(ApiResponse.completed(songsUI));
     } catch (e) {
-      songListSink.add(ApiResponse.error(e.toString()));
+      songListSink.add(ApiResponse.error(AppConstants.wentWrong));
       print(e);
     }
   }

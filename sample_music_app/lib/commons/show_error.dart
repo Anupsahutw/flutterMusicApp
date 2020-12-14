@@ -12,7 +12,9 @@ class Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      color: Colors.black,
+      margin: const EdgeInsets.only(top: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -30,7 +32,8 @@ class Error extends StatelessWidget {
             child:
                 Text(AppConstants.retry, style: TextStyle(color: Colors.white)),
             onPressed: onRetryPressed,
-          )
+          ),
+          SizedBox(height: 200),
         ],
       ),
     );

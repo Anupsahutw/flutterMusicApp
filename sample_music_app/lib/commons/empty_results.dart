@@ -10,16 +10,20 @@ class EmptyResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.lightGreen,
-              fontSize: 18,
+          Container(
+            color: Colors.black,
+            margin: const EdgeInsets.only(top: 20),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.lightGreen,
+                fontSize: 18,
+              ),
             ),
           ),
+          SizedBox(height: 200),
         ],
       ),
     );

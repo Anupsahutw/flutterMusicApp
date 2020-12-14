@@ -8,7 +8,9 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      color: Colors.black,
+      margin: const EdgeInsets.only(top: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -24,6 +26,7 @@ class Loading extends StatelessWidget {
           CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.lightGreen),
           ),
+          SizedBox(height: 200),
         ],
       ),
     );
