@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:samplemusicapp/commons/audio_player.dart';
+import 'package:samplemusicapp/commons/play_pause_song.dart';
 import 'package:samplemusicapp/model/song_display_model.dart';
 import 'package:samplemusicapp/viewmodel/handle_song_list_viewmodel.dart';
 
@@ -27,17 +28,27 @@ class SongListWidgetState extends State<SongListWidget> {
           itemBuilder: (context, index) {
             SongDisplayModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
-              var handleSongPlayList = handleSongListViewModel.handlePlaySong(
-                  currentSongIndex, previousPlayedAudioIndex, widget.songList);
-              widget.callback(currentSongIndex, previousPlayedAudioIndex,
-                  handleSongPlayList);
-              previousPlayedAudioIndex = currentSongIndex;
-              setState(() {});
+              callbackReceived(currentSongIndex);
             }, widget.songList, index, previousPlayedAudioIndex);
           },
         ),
       ),
     );
+  }
+
+  void callbackReceived(int currentSongIndex) {
+    var handleSongPlayList = handleSongListViewModel.handlePlaySong(
+        currentSongIndex, previousPlayedAudioIndex, widget.songList);
+
+    var playPauseSong = PlayPauseSong(SingletonAudioPlayer());
+    playPauseSong.playSong(handleSongPlayList[currentSongIndex],
+        handleSongPlayList, previousPlayedAudioIndex);
+
+    widget.callback(
+        currentSongIndex, previousPlayedAudioIndex, handleSongPlayList);
+    previousPlayedAudioIndex = currentSongIndex;
+
+    setState(() {});
   }
 }
 

@@ -79,12 +79,6 @@ class PlayControlState extends State<PlayerControlWidget> {
     playPauseAudio(false);
   }
 
-//  Future resume() async {
-//    await _audio.play();
-//    setStateOnPlay(true, true);
-//    widget.callback(true, songList, currentPlayedAudioIndex);
-//  }
-
   @override
   Widget build(BuildContext context) {
     return Visibility(

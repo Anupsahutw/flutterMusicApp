@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/repository/playlist_repository.dart';
-import 'package:samplemusicapp/services/networking.dart';
+import 'package:samplemusicapp/services/network.dart';
 
 void main() {
   PlayListRepository repo;

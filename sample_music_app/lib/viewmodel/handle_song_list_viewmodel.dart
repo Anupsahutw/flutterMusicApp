@@ -15,9 +15,6 @@ class HandleSongListViewModel {
       songList[currentSongIndex]
           .setIsPlaying(!songList[currentSongIndex].isPlaying);
     }
-    var handleSongViewModel = PlayPauseSong(SingletonAudioPlayer());
-    handleSongViewModel.playSong(
-        songList[currentSongIndex], songList, previousPlayedAudioIndex);
     return songList;
   }
 }
