@@ -7,7 +7,7 @@ import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/view/player_controls_widget.dart';
 import 'package:samplemusicapp/view/song_list_widget.dart';
 import 'package:samplemusicapp/blocs/songlist_blocs.dart';
-import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
+import 'package:samplemusicapp/model/song_display_model.dart';
 
 import '../commons/loading.dart';
 import '../commons/show_error.dart';
@@ -42,7 +42,7 @@ class ListSearchState extends State<PlayListSearch> {
   }
 
   onSongPlayed(int currentPlayedAudioIndex, int previousPlayedAudioIndex,
-      List<SongViewModel> songList) {
+      List<SongDisplayModel> songList) {
     String currentSongUrl = "";
     currentSongUrl = songList[currentPlayedAudioIndex].previewUrl;
     _myKey.currentState
@@ -86,7 +86,7 @@ class ListSearchState extends State<PlayListSearch> {
                 ),
               ),
             ),
-            StreamBuilder<ApiResponse<List<SongViewModel>>>(
+            StreamBuilder<ApiResponse<List<SongDisplayModel>>>(
               stream: _bloc.songListStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {

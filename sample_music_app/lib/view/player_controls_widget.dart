@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/commons/audioPlayer.dart';
-import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
+import 'package:samplemusicapp/commons/audio_player.dart';
+import 'package:samplemusicapp/model/song_display_model.dart';
 
 class PlayerControlWidget extends StatefulWidget {
-  final Function(bool isPlaying, List<SongViewModel> songList,
+  final Function(bool isPlaying, List<SongDisplayModel> songList,
       int currentPlayedAudioIndex) callback;
 
   PlayerControlWidget({Key key, this.callback}) : super(key: key);
@@ -22,7 +22,7 @@ class PlayControlState extends State<PlayerControlWidget> {
   bool _isPlaying = false;
   bool _visible = false;
   String currentSongUrl;
-  List<SongViewModel> songList;
+  List<SongDisplayModel> songList;
   int currentPlayedAudioIndex;
   String previousSongUrl;
 
@@ -58,8 +58,8 @@ class PlayControlState extends State<PlayerControlWidget> {
     });
   }
 
-  void setCurrentSongUrl(
-      String url, List<SongViewModel> songList, int currentPlayedAudioIndex) {
+  void setCurrentSongUrl(String url, List<SongDisplayModel> songList,
+      int currentPlayedAudioIndex) {
     currentSongUrl = url;
     this.songList = songList;
     this.currentPlayedAudioIndex = currentPlayedAudioIndex;

@@ -4,23 +4,24 @@ import 'package:samplemusicapp/repository/playlist_repository.dart';
 import 'package:samplemusicapp/services/api_response.dart';
 import 'package:samplemusicapp/services/networking.dart';
 import 'package:samplemusicapp/utilities/app_constants.dart';
-import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
+import 'package:samplemusicapp/model/song_display_model.dart';
 
 class SongBloc {
   PlayListRepository _playListRepository;
 
   StreamController _songListController;
 
-  StreamSink<ApiResponse<List<SongViewModel>>> get songListSink =>
+  StreamSink<ApiResponse<List<SongDisplayModel>>> get songListSink =>
       _songListController.sink;
 
-  Stream<ApiResponse<List<SongViewModel>>> get songListStream =>
+  Stream<ApiResponse<List<SongDisplayModel>>> get songListStream =>
       _songListController.stream;
 
   ApiBaseHelper _helper = ApiBaseHelper();
 
   SongBloc(String artist) {
-    _songListController = StreamController<ApiResponse<List<SongViewModel>>>();
+    _songListController =
+        StreamController<ApiResponse<List<SongDisplayModel>>>();
     _playListRepository = PlayListRepository(_helper);
     fetchSongList(artist);
   }
@@ -29,8 +30,8 @@ class SongBloc {
     songListSink.add(ApiResponse.loading(AppConstants.fetchingPopularSongs));
     try {
       List<Results> songs = await _playListRepository.fetchSongList(artist);
-      List<SongViewModel> songsUI =
-          songs.map((results) => SongViewModel(results)).toList();
+      List<SongDisplayModel> songsUI =
+          songs.map((results) => SongDisplayModel(results)).toList();
       if (songsUI.length == 0)
         songListSink.add(ApiResponse.emptyResult(AppConstants.noSongs));
       else

@@ -1,22 +1,21 @@
 import 'package:samplemusicapp/utilities/app_constants.dart';
 import 'package:samplemusicapp/model/songs.dart';
 
-class SongViewModel {
+class SongDisplayModel {
   String _trackName;
   String _artistName;
   String _artworkUrl100;
   String _previewUrl;
-  //String _playedAudio;
-  bool _isplaying;
+  bool _isPlaying;
   String _collectionName;
 
-  SongViewModel(Results results) {
+  SongDisplayModel(Results results) {
     _trackName = results.trackName;
     _artistName = results.artistName;
     _artworkUrl100 = results.artworkUrl100;
     _previewUrl = results.previewUrl;
     _collectionName = results.collectionName;
-    _isplaying = false;
+    _isPlaying = false;
   }
 
   String get trackName {
@@ -40,10 +39,10 @@ class SongViewModel {
   }
 
   void setIsPlaying(bool value) {
-    _isplaying = value;
+    _isPlaying = value;
   }
 
   bool get isPlaying {
-    return _isplaying;
+    return _isPlaying;
   }
 }

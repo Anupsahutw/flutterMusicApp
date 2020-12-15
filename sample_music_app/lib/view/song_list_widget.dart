@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:samplemusicapp/viewmodel/handle_song_viewmodel.dart';
-import 'package:samplemusicapp/commons/audioPlayer.dart';
-import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
+import 'package:samplemusicapp/commons/audio_player.dart';
+import 'package:samplemusicapp/model/song_display_model.dart';
+import 'package:samplemusicapp/viewmodel/handle_song_list_viewmodel.dart';
 
 class SongListWidget extends StatefulWidget {
-  final List<SongViewModel> songList;
+  final List<SongDisplayModel> songList;
   final Function(int currentPlayedAudioIndex, int previousPlayedAudioIndex,
-      List<SongViewModel> songList) callback;
+      List<SongDisplayModel> songList) callback;
   SongListWidget({Key key, this.songList, this.callback}) : super(key: key);
   @override
   SongListWidgetState createState() => SongListWidgetState();
@@ -16,7 +16,7 @@ class SongListWidget extends StatefulWidget {
 
 class SongListWidgetState extends State<SongListWidget> {
   int previousPlayedAudioIndex;
-  var handleSongViewModel = HandleSongViewModel();
+  var handleSongListViewModel = HandleSongListViewModel();
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -25,9 +25,9 @@ class SongListWidgetState extends State<SongListWidget> {
         child: ListView.builder(
           itemCount: widget.songList.length,
           itemBuilder: (context, index) {
-            SongViewModel model = widget.songList[index];
+            SongDisplayModel model = widget.songList[index];
             return SongListItemWidget(model, (currentSongIndex) {
-              var handleSongPlayList = handleSongViewModel.handlePlaySong(
+              var handleSongPlayList = handleSongListViewModel.handlePlaySong(
                   currentSongIndex, previousPlayedAudioIndex, widget.songList);
               widget.callback(currentSongIndex, previousPlayedAudioIndex,
                   handleSongPlayList);
@@ -42,9 +42,9 @@ class SongListWidgetState extends State<SongListWidget> {
 }
 
 class SongListItemWidget extends StatefulWidget {
-  final SongViewModel model;
+  final SongDisplayModel model;
   final Function(int previousAudioIndex) callback;
-  final List<SongViewModel> songList;
+  final List<SongDisplayModel> songList;
   final int currentSongIndex;
   final int previousPlayedAudioIndex;
   SongListItemWidget(this.model, this.callback, this.songList,

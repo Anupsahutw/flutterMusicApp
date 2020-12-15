@@ -11,7 +11,7 @@ import 'package:samplemusicapp/blocs/songlist_blocs.dart';
 
 import 'package:samplemusicapp/main.dart';
 import 'package:samplemusicapp/model/songs.dart';
-import 'package:samplemusicapp/viewmodel/song_viewmodel.dart';
+import 'package:samplemusicapp/model/song_display_model.dart';
 
 void main() {
   setUp(() {});
