@@ -30,7 +30,8 @@ class ListSearchState extends State<PlayListSearch> {
   void initState() {
     super.initState();
     _textController.clear();
-    _bloc = SongBloc(_allSongs);
+    _bloc = SongBloc();
+    _bloc.fetchSongList(_allSongs);
   }
 
   onItemChanged(String artistName) {
@@ -56,7 +57,6 @@ class ListSearchState extends State<PlayListSearch> {
 
   onSongPaused() {
     _myKeySongList.currentState.setState(() {});
-    //setState(() {});
   }
 
   @override
@@ -123,19 +123,23 @@ class ListSearchState extends State<PlayListSearch> {
             PlayerControlWidget(
               key: _myKey,
               callback: (isPlaying, songList, currentPlayedAudioIndex) {
-                if (listEquals(
-                    songList, _myKeySongList.currentState.widget.songList)) {
-                  _myKeySongList
-                      .currentState.widget.songList[currentPlayedAudioIndex]
-                      .setIsPlaying(isPlaying);
-                  onSongPaused();
-                }
+                callBackReceivedOnPlayPauseClicked(
+                    songList, currentPlayedAudioIndex, isPlaying);
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void callBackReceivedOnPlayPauseClicked(List<SongDisplayModel> songList,
+      int currentPlayedAudioIndex, bool isPlaying) {
+    if (listEquals(songList, _myKeySongList.currentState.widget.songList)) {
+      _myKeySongList.currentState.widget.songList[currentPlayedAudioIndex]
+          .setIsPlaying(isPlaying);
+      onSongPaused();
+    }
   }
 
   @override

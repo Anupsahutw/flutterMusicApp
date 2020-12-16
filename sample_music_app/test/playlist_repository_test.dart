@@ -4,6 +4,8 @@ import 'package:samplemusicapp/model/songs.dart';
 import 'package:samplemusicapp/repository/playlist_repository.dart';
 import 'package:samplemusicapp/services/network.dart';
 
+import 'mock_response.dart';
+
 void main() {
   PlayListRepository repo;
   ApiBaseHelper _helper;
@@ -25,8 +27,3 @@ void main() {
 class MockApiBaseHelper extends Mock implements ApiBaseHelper {
   MockApiBaseHelper();
 }
-
-Map<String, dynamic> response = <String, dynamic>{
-  "resultCount": 50,
-  "results": []
-};

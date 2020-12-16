@@ -18,20 +18,25 @@ class SongBloc {
       _songListController.stream;
 
   ApiBaseHelper _helper = ApiBaseHelper();
+  List<SongDisplayModel> songsUI;
 
-  SongBloc(String artist) {
+  SongBloc() {
     _songListController =
         StreamController<ApiResponse<List<SongDisplayModel>>>();
-    _playListRepository = PlayListRepository(_helper);
-    fetchSongList(artist);
+    this._playListRepository = PlayListRepository(_helper);
+    // fetchSongList(artist);
   }
 
   fetchSongList(String artist) async {
     songListSink.add(ApiResponse.loading(AppConstants.fetchingPopularSongs));
+    await fetchSongs(artist, this._playListRepository);
+  }
+
+  Future fetchSongs(
+      String artist, PlayListRepository _playListRepository) async {
     try {
       List<Results> songs = await _playListRepository.fetchSongList(artist);
-      List<SongDisplayModel> songsUI =
-          songs.map((results) => SongDisplayModel(results)).toList();
+      songsUI = songs.map((results) => SongDisplayModel(results)).toList();
       if (songsUI.length == 0)
         songListSink.add(ApiResponse.emptyResult(AppConstants.noSongs));
       else
