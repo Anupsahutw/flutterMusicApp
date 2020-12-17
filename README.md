@@ -1,4 +1,4 @@
-# Music Player
+# MusicApp
 
 This is a music player app developed in Flutter. It uses the iTunes affiliate API and allows to search by artist and displays the search results on the screen. By default, all the songs are fetched from the iTunes affiliate API are displayed on the screen.
 
